@@ -23,7 +23,24 @@ body{margin:0;background:#020817;color:#f8fafc;font-family:Inter,Arial,sans-seri
   border-bottom:1px solid rgba(56,189,248,.12);
 }
 
-.velora-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:44px}
+.velora-nav{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  margin-bottom:44px;
+}
+
+.velora-logo{
+  justify-self:start;
+}
+
+.velora-links{
+  justify-self:center;
+}
+
+.velora-store{
+  justify-self:end;
+}
 .velora-logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px}
 .velora-icon{width:42px;height:42px;border-radius:14px;background:#22d3ee;color:#02111f;display:flex;align-items:center;justify-content:center;font-weight:900}
 .velora-links{display:flex;gap:38px}
