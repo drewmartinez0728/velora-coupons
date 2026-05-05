@@ -43,11 +43,23 @@ body{margin:0;background:#020817;color:#f8fafc;font-family:Inter,Arial,sans-seri
   max-width:560px;margin:0 auto 34px;padding:28px 32px;border-radius:24px;
   background:rgba(8,20,40,.9);
   border:1px dashed rgba(56,189,248,.28);
-  display:flex;align-items:center;justify-content:space-between;text-align:left;
+  display:flex;align-items:center;justify-content:space-between;
   box-shadow:0 20px 70px rgba(0,0,0,.35);
+}
+.velora-codebox-text{
+  text-align:center;
+  flex:1;
 }
 .velora-label{font-size:13px;letter-spacing:3px;color:#94a3b8;text-transform:uppercase;margin-bottom:8px}
 .velora-code{font-family:monospace;font-size:38px;letter-spacing:10px;color:#38dff8;font-weight:900}
+
+@keyframes copyBounce{
+  0%{transform:scale(1)}
+  30%{transform:scale(1.18)}
+  60%{transform:scale(0.93)}
+  80%{transform:scale(1.06)}
+  100%{transform:scale(1)}
+}
 .velora-copy{
   background:#10233d;
   border:1px solid rgba(148,163,184,.18);
@@ -55,29 +67,17 @@ body{margin:0;background:#020817;color:#f8fafc;font-family:Inter,Arial,sans-seri
   border-radius:14px;
   padding:12px 18px;
   cursor:pointer;
-  transition:background .2s,color .2s,transform .2s;
   font-family:Inter,Arial,sans-serif;
   font-size:15px;
-  display:flex;
-  align-items:center;
-  gap:8px;
   min-width:96px;
-  justify-content:center;
+  transition:background .2s,color .2s;
+  flex-shrink:0;
 }
-.velora-copy.copied{background:#22d3ee;color:#00111f;font-weight:800;transform:scale(1.05)}
-.velora-copy .check-icon{
-  width:18px;height:18px;display:none;
-  stroke:#00111f;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;
-  fill:none;flex-shrink:0;
-}
-.velora-copy.copied .check-icon{display:block}
-@keyframes drawCheck{
-  from{stroke-dashoffset:30}
-  to{stroke-dashoffset:0}
-}
-.velora-copy.copied .check-path{
-  stroke-dasharray:30;stroke-dashoffset:30;
-  animation:drawCheck 0.35s ease forwards 0.05s;
+.velora-copy.copied{
+  background:#22d3ee;
+  color:#00111f;
+  font-weight:800;
+  animation:copyBounce .45s ease forwards;
 }
 
 .velora-actions{display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap}
@@ -126,6 +126,7 @@ body{margin:0;background:#020817;color:#f8fafc;font-family:Inter,Arial,sans-seri
   .velora-sub{font-size:16px;line-height:1.5;margin-bottom:28px}
 
   .velora-codebox{flex-direction:column;gap:16px;text-align:center;padding:22px;margin-bottom:24px}
+  .velora-codebox-text{text-align:center}
   .velora-code{font-size:34px;letter-spacing:7px}
 
   .velora-actions{flex-direction:column;align-items:center;justify-content:center;width:100%}
@@ -171,16 +172,11 @@ body{margin:0;background:#020817;color:#f8fafc;font-family:Inter,Arial,sans-seri
   </p>
 
   <div class="velora-codebox">
-    <div>
+    <div class="velora-codebox-text">
       <div class="velora-label">Promo Code</div>
       <div class="velora-code">DBM</div>
     </div>
-    <button class="velora-copy" onclick="copyCode(this)">
-      <svg class="check-icon" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-        <polyline class="check-path" points="3,9 7,13 15,5"/>
-      </svg>
-      <span class="btn-text">Copy</span>
-    </button>
+    <button class="velora-copy" onclick="copyCode(this)">Copy</button>
   </div>
 
   <div class="velora-actions">
@@ -252,11 +248,11 @@ body{margin:0;background:#020817;color:#f8fafc;font-family:Inter,Arial,sans-seri
 <script>
 function copyCode(button) {
   navigator.clipboard.writeText("DBM").then(function() {
+    button.textContent = "Copied!";
     button.classList.add("copied");
-    button.querySelector(".btn-text").textContent = "Copied!";
     setTimeout(function() {
+      button.textContent = "Copy";
       button.classList.remove("copied");
-      button.querySelector(".btn-text").textContent = "Copy";
     }, 1600);
   });
 }
